@@ -4,10 +4,13 @@ import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/configs/firebase'
 import { AuthContext } from './_context/AuthContext'
+import { useMutation } from "convex/react";
+import { api } from '@/convex/_generated/api'
 
 function Provider({ children }) {
 
-    const [ user, setUser ] = useState();
+    const [user, setUser] = useState();
+    const CreateUser = useMutation(api.users.CreateNewUser);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
