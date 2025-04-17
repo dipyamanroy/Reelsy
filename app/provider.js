@@ -2,7 +2,7 @@
 import React from 'react'
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 
-function provider({ children }) {
+function Provider({ children }) {
     return (
         <div>
             <NextThemesProvider
