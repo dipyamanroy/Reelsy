@@ -13,12 +13,25 @@ function Provider({ children }) {
     const CreateUser = useMutation(api.users.CreateNewUser);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            console.log(user);
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
             setUser(user);
-        })
+            console.log("onAuthStateChanged triggered", user)
+
+            if (user) {
+                queueMicrotask(async () => {
+                    const result = await CreateUser({
+                        name: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL
+                    });
+                    console.log(result);
+                });
+            }
+        });
+
         return () => unsubscribe();
     }, []);
+
 
     return (
         <div>

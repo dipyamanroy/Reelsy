@@ -13,7 +13,7 @@ export const CreateNewUser = mutation({
         .filter((q)=>q.eq(q.field('email'), args.email))
         .collect();
 
-        if(user[0]?.email)
+        if(!user[0]?.email)
         {
             // User does not exist, create new
             const result = await ctx.db.insert('users', {
