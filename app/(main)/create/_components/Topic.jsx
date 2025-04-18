@@ -24,11 +24,14 @@ function Topic({ onHandleInputChange }) {
     const [selectedTopic, setSelectedTopic] = useState();
     const [finalTopic, setFinalTopic] = useState('');
     const [scripts, setScripts] = useState();
+    const [selectedScriptIndex, setSelectedScriptIndex] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
     const handleTopicChange = (value) => {
         onHandleInputChange('topic', value);
         setFinalTopic(value);
+        setScripts(undefined);
+        setSelectedScriptIndex(null);
     };
 
     const GenerateScript = async () => {
@@ -38,6 +41,7 @@ function Topic({ onHandleInputChange }) {
         }
 
         setIsLoading(true);
+        setSelectedScriptIndex(null);
         try {
             const result = await axios.post('/api/generate-script', {
                 topic: finalTopic
@@ -46,9 +50,8 @@ function Topic({ onHandleInputChange }) {
             setScripts(result.data?.scripts);
         } catch (error) {
             console.error("Error generating script:", error);
-        } finally {
-            setIsLoading(false);
         }
+        setIsLoading(false);
     };
 
     return (
@@ -96,10 +99,27 @@ function Topic({ onHandleInputChange }) {
                         </div>
                     </TabsContent>
                 </Tabs>
+
+                {scripts?.length > 0 &&
+                    <div className='mt-3'>
+                        <h2>Select the script</h2>
+                        <div className='grid grid-cols-2 gap-5 mt-1'>
+                            {scripts?.map((item, index) => (
+                                <div key={index}
+                                    className={`p-3 border rounded-lg cursor-pointer
+                                ${selectedScriptIndex == index && 'border-white bg-secondary'}
+                            `}
+                                    onClick={() => setSelectedScriptIndex(index)}>
+                                    <h2 className='line-clamp-4 text-sm text-gray-300'>{item.content}</h2>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                }
             </div>
 
             <Button
-                className='mt-3'
+                className={`mt-3 transition-opacity duration-300 ${selectedScriptIndex != null ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                 size='sm'
                 onClick={GenerateScript}
                 disabled={isLoading}
@@ -111,6 +131,7 @@ function Topic({ onHandleInputChange }) {
                 )}
                 Generate Script
             </Button>
+
         </div>
     );
 }
