@@ -2,7 +2,7 @@
 import { useAuthContext } from '@/app/provider'
 import { Button } from '@/components/ui/button'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
-import { Clapperboard, HomeIcon, Search, Sparkle, WalletCards } from 'lucide-react'
+import { BadgeCent, Clapperboard, HomeIcon, Search, WalletCards } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -75,7 +75,7 @@ function AppSidebar() {
             <SidebarFooter>
                 <div className='p-5 border rounded-lg mb-6 bg-gray-800'>
                     <div className='flex items-center justify-between'>
-                        <Sparkle className='text-gray-400' />
+                        <BadgeCent className='text-gray-400' />
                         <h2 className='text-gray-400'>{user?.credits} Credits Left</h2>
                     </div>
                     <Button className='w-full mt-3'>Buy More Credits</Button>
