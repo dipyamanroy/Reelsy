@@ -41,14 +41,14 @@ function Captions({ onHandleInputChange }) {
 
     return (
         <div className='mt-6'>
-            <h2>Captions</h2>
+            <h2>Caption Styles</h2>
             <p className='text-sm text-gray-400 mb-1'>Select caption style for your video</p>
             <div className='flex flex-wrap gap-4 mt-2'>
                 {options.map((option, index) => (
                     <div key={index} className={`p-2 dark:bg-gray-900 dark:border-white rounded-lg hover:border cursor-pointer ${selectedCaptionStyle == option.name && 'border'}`}
                         onClick={() => {
                             setSelectedCaptionStyle(option.name)
-                            onHandleInputChange(option)
+                            onHandleInputChange('caption', option)
                         }}
                     >
                         <h2 className={option.style}>{option.name}</h2>

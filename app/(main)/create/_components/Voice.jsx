@@ -53,8 +53,8 @@ function Voice({ onHandleInputChange }) {
 
     return (
         <div className='mt-6'>
-            <h2>Voice</h2>
-            <p className='text-sm text-gray-400 mb-1'>Select voice style for your video</p>
+            <h2>Voices</h2>
+            <p className='text-sm text-gray-400 mb-1'>Pick the voice for your video</p>
             <ScrollArea className='h-[150px] w-full'>
             <div className='grid grid-cols-2 gap-3'>
                 {voiceOptions.map((voice, index) => (
