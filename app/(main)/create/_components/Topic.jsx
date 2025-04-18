@@ -62,9 +62,9 @@ function Topic({ onHandleInputChange }) {
                 onChange={(event) => onHandleInputChange('title', event?.target.value)}
             />
 
-            <div className='mt-5'>
+            <div className='mt-6'>
                 <h2>Topic</h2>
-                <p className='text-sm text-gray-600'>Add or select your video topic</p>
+                <p className='text-sm text-gray-400'>Add or select your video topic</p>
                 <Tabs defaultValue="your_topic" className="w-full mt-2">
                     <TabsList>
                         <TabsTrigger value="your_topic">Your Topic</TabsTrigger>
