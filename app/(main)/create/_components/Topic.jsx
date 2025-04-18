@@ -1,10 +1,12 @@
 "use client"
+
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from '@/components/ui/textarea';
-import { Sparkle } from 'lucide-react'
-import React, { useState } from 'react'
+import axios from 'axios';
+import { Sparkle, Sparkles, Loader2 } from 'lucide-react';
+import React, { useState } from 'react';
 
 const suggestions = [
     // SaaS
@@ -18,14 +20,44 @@ const suggestions = [
     "Influencer Unboxing Magic",
 ];
 
-
-
 function Topic({ onHandleInputChange }) {
     const [selectedTopic, setSelectedTopic] = useState();
+    const [finalTopic, setFinalTopic] = useState('');
+    const [scripts, setScripts] = useState();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleTopicChange = (value) => {
+        onHandleInputChange('topic', value);
+        setFinalTopic(value);
+    };
+
+    const GenerateScript = async () => {
+        if (!finalTopic) {
+            console.error("No topic provided");
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const result = await axios.post('/api/generate-script', {
+                topic: finalTopic
+            });
+            console.log(result.data);
+            setScripts(result.data?.scripts);
+        } catch (error) {
+            console.error("Error generating script:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div>
             <h2 className='mb-1'>Project Title</h2>
-            <Input placeholder="Enter project title" />
+            <Input
+                placeholder="Enter project title"
+                onChange={(event) => onHandleInputChange('title', event?.target.value)}
+            />
 
             <div className='mt-5'>
                 <h2>Topic</h2>
@@ -33,33 +65,54 @@ function Topic({ onHandleInputChange }) {
                 <Tabs defaultValue="your_topic" className="w-full mt-2">
                     <TabsList>
                         <TabsTrigger value="your_topic">Your Topic</TabsTrigger>
-                        <TabsTrigger value="suggestion"><Sparkle className='text-amber-200' /> Suggestions</TabsTrigger>
+                        <TabsTrigger value="suggestion">
+                            <Sparkle /> Suggestions
+                        </TabsTrigger>
                     </TabsList>
+
                     <TabsContent value="your_topic">
-                        <div>
-                            <Textarea placeholder="Enter your topic"/>
-                        </div>
+                        <Textarea
+                            placeholder="Enter your topic"
+                            onChange={(event) => handleTopicChange(event.target.value)}
+                            className="mt-2"
+                        />
                     </TabsContent>
+
                     <TabsContent value="suggestion">
-                        <div className=''>
+                        <div className='mt-2'>
                             {suggestions.map((suggestion, index) => (
                                 <Button
                                     key={index}
                                     variant={selectedTopic === suggestion ? "secondary" : "outline"}
-                                    onClick={() => setSelectedTopic(suggestion)}
+                                    onClick={() => {
+                                        setSelectedTopic(suggestion);
+                                        handleTopicChange(suggestion);
+                                    }}
                                     className="mr-2 mb-2"
                                 >
                                     {suggestion}
                                 </Button>
-
                             ))}
                         </div>
                     </TabsContent>
                 </Tabs>
-
             </div>
+
+            <Button
+                className='mt-3'
+                size='sm'
+                onClick={GenerateScript}
+                disabled={isLoading}
+            >
+                {isLoading ? (
+                    <Loader2 className="animate-spin mr-1" size={16} />
+                ) : (
+                    <Sparkles className="mr-1" size={16} />
+                )}
+                Generate Script
+            </Button>
         </div>
-    )
+    );
 }
 
-export default Topic
+export default Topic;
