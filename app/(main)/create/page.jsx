@@ -6,12 +6,18 @@ import Voice from './_components/Voice';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Captions from './_components/Captions';
 import { Button } from '@/components/ui/button';
-import { WandSparkles } from 'lucide-react';
+import { Loader2, WandSparkles } from 'lucide-react';
 import Preview from './_components/Preview';
 import axios from 'axios';
+import { useMutation } from 'convex/react';
+import { useAuthContext } from '@/app/provider';
+import { api } from '@/convex/_generated/api';
 
 function Create() {
     const [formData, setFormData] = useState();
+    const CreateInitialVideoRecord = useMutation(api.videoData.CreateVideoData);
+    const { user } = useAuthContext();
+    const [isLoading, setIsLoading] = useState(false);
 
     const onHandleInputChange = (fieldName, fieldValue) => {
         setFormData(prev => ({
@@ -26,10 +32,28 @@ function Create() {
         {
             console.log("ERROR", "Enter All Fields")
         }
+
+        setIsLoading(true);
+
+        // Save Video daata
+        const resp = await CreateInitialVideoRecord({
+            title: formData.title,
+            topic: formData.topic,
+            script: formData.script,
+            artStyle: formData.artStyle,
+            caption: formData.caption,
+            voice: formData.voice,
+            uid: user?._id,
+            createdBy: user?.email
+        })
+
+        console.log(resp);
+
         const result = await axios.post('/api/generate-video-data', {
             ...formData
         })
         console.log(result);
+        setIsLoading(false);
     }
 
     return (
@@ -52,13 +76,13 @@ function Create() {
                         // className={`mt-3 transition-opacity duration-300 ${selectedScriptIndex != null ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                         size='sm'
                         onClick={GenerateVideo}
-                        // disabled={isLoading}
+                        disabled={isLoading}
                     >
-                        {/* {isLoading ? (
+                        {isLoading ? (
                             <Loader2 className="animate-spin mr-1" size={16} />
-                        ) : ( */}
+                        ) : (
                             <WandSparkles className="mr-1" size={16} />
-                        {/* )} */}
+                        )}
                         Generate Video
                     </Button>
                     </ScrollArea>
