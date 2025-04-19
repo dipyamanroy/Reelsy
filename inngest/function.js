@@ -81,7 +81,6 @@ export const GenerateVideoData = inngest.createFunction(
 
                 // const downloadUrl = await getDownloadURL(storageRef);
                 // return downloadUrl;
-                return "https://firebasestorage.googleapis.com/v0/b/fifth-bridge.firebasestorage.app/o/Reelsy-data%2Faudio%2Ftts-1745041983203.mp3?alt=media&token=a2eec23a-5e7c-4847-93c0-35caccf6470b"
             }
         );
 
