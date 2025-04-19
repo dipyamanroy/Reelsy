@@ -8,6 +8,7 @@ import Captions from './_components/Captions';
 import { Button } from '@/components/ui/button';
 import { WandSparkles } from 'lucide-react';
 import Preview from './_components/Preview';
+import axios from 'axios';
 
 function Create() {
     const [formData, setFormData] = useState();
@@ -18,6 +19,17 @@ function Create() {
             [fieldName]: fieldValue
         }))
         console.log(formData)
+    }
+
+    const GenerateVideo = async () => {
+        if(!formData?.topic || !formData?.script || !formData?.artStyle || !formData?.caption || !formData?.voice) 
+        {
+            console.log("ERROR", "Enter All Fields")
+        }
+        const result = await axios.post('/api/generate-video-data', {
+            ...formData
+        })
+        console.log(result);
     }
 
     return (
@@ -35,11 +47,11 @@ function Create() {
                         <Voice onHandleInputChange={onHandleInputChange} />
                         {/* Captions */}
                         <Captions onHandleInputChange={onHandleInputChange} />
-                        <Button
+                    <Button
                         className='mt-5 w-full'
                         // className={`mt-3 transition-opacity duration-300 ${selectedScriptIndex != null ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                         size='sm'
-                        // onClick={GenerateScript}
+                        onClick={GenerateVideo}
                         // disabled={isLoading}
                     >
                         {/* {isLoading ? (
