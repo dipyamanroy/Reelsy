@@ -3,6 +3,8 @@ import { inngest } from "./client";
 import { storage } from "@/configs/firebase";
 import { OpenAI } from "openai";
 import { createClient } from "@deepgram/sdk";
+import Replicate from "replicate";
+import axios from "axios";
 
 const ImagePromptScript = `Generate a detailed image prompt for each scene from this 30-second video script, using a {style} style. Output JSON only.
 
@@ -34,6 +36,10 @@ export const helloWorld = inngest.createFunction(
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
+});
+
+const replicate = new Replicate({
+    auth: process.env.REPLICATE_API_TOKEN,
 });
 
 export const GenerateVideoData = inngest.createFunction(
@@ -119,8 +125,43 @@ export const GenerateVideoData = inngest.createFunction(
             }
         );
 
+        // GenerateImages
+        const GenerateImages = await step.run(
+            "generateImages",
+            async () => {
+                const urls = await Promise.all(
+                    GenerateImagePrompts.map(async ({ imagePrompt }) => {
+                        const [output] = await replicate.run(
+                            "bytedance/sdxl-lightning-4step:6f7a773af6fc3e8de9d5a3c00be77c17308914bf67772726aff83496ba1e3bbe",
+                            {
+                                input: {
+                                    prompt: imagePrompt,
+                                    height: 1280,
+                                    width: 1024,
+                                    num_outputs: 1,
+                                },
+                            }
+                        );
 
-        return GenerateImagePrompts
-        // Continue with captions, images, etc...
+                        const resp = await axios.get(output, {
+                            responseType: "arraybuffer",
+                            timeout: 20000,
+                        });
+
+                        const fileName = `Reelsy-data/images/img-${Date.now()}-${Math.random()
+                            .toString(36)
+                            .substr(2, 5)}.png`;
+                        const storageRef = ref(storage, fileName);
+                        await uploadBytes(storageRef, resp.data, { contentType: "image/png" });
+
+                        return getDownloadURL(storageRef);
+                    })
+                );
+
+                return urls;
+            }
+        );
+
+        return GenerateImages;
     }
 );
