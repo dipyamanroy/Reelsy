@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation' // Import the router
 import Topic from './_components/Topic'
 import ArtStyle from './_components/ArtStyle';
 import Voice from './_components/Voice';
@@ -12,12 +13,14 @@ import axios from 'axios';
 import { useMutation } from 'convex/react';
 import { useAuthContext } from '@/app/provider';
 import { api } from '@/convex/_generated/api';
+import { toast } from "sonner"
 
 function Create() {
     const [formData, setFormData] = useState();
     const CreateInitialVideoRecord = useMutation(api.videoData.CreateVideoData);
     const { user } = useAuthContext();
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter(); // Initialize the router
 
     const onHandleInputChange = (fieldName, fieldValue) => {
         setFormData(prev => ({
@@ -28,41 +31,50 @@ function Create() {
     }
 
     const GenerateVideo = async () => {
-
-        if(user?.credits <= 0)
-        {
-            toast('You are all out of credits!')
+        if (user?.credits <= 0) {
+            toast("No Credits", {
+                description: "You are all out of credits!"
+            });
             return;
         }
 
-        if(!formData?.topic || !formData?.script || !formData?.artStyle || !formData?.caption || !formData?.voice) 
-        {
-            console.log("ERROR", "Enter All Fields")
+        if (!formData?.topic || !formData?.script || !formData?.artStyle || !formData?.caption || !formData?.voice) {
+            toast("Error", {
+                description: "Please enter all required fields",
+            })
+            return;
         }
 
         setIsLoading(true);
+        try {
+            // Save Video data
+            const resp = await CreateInitialVideoRecord({
+                title: formData.title,
+                topic: formData.topic,
+                script: formData.script,
+                artStyle: formData.artStyle,
+                caption: formData.caption,
+                voice: formData.voice,
+                uid: user?._id,
+                createdBy: user?.email,
+                credits: user?.credits
+            });
 
-        // Save Video daata
-        const resp = await CreateInitialVideoRecord({
-            title: formData.title,
-            topic: formData.topic,
-            script: formData.script,
-            artStyle: formData.artStyle,
-            caption: formData.caption,
-            voice: formData.voice,
-            uid: user?._id,
-            createdBy: user?.email,
-            credits: user?.credits
-        })
+            console.log(resp);
 
-        console.log(resp);
+            const result = await axios.post('/api/generate-video-data', {
+                ...formData,
+                recordId: resp
+            });
 
-        const result = await axios.post('/api/generate-video-data', {
-            ...formData,
-            recordId: resp
-        })
-        console.log(result);
-        setIsLoading(false);
+            console.log(result);
+
+            router.push('/dashboard');
+        } catch (error) {
+            console.error('Error generating video:', error);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -80,20 +92,19 @@ function Create() {
                         <Voice onHandleInputChange={onHandleInputChange} />
                         {/* Captions */}
                         <Captions onHandleInputChange={onHandleInputChange} />
-                    <Button
-                        className='mt-5 w-full'
-                        // className={`mt-3 transition-opacity duration-300 ${selectedScriptIndex != null ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-                        size='sm'
-                        onClick={GenerateVideo}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? (
-                            <Loader2 className="animate-spin mr-1" size={16} />
-                        ) : (
-                            <WandSparkles className="mr-1" size={16} />
-                        )}
-                        Generate Video
-                    </Button>
+                        <Button
+                            className='mt-5 w-full'
+                            size='sm'
+                            onClick={GenerateVideo}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? (
+                                <Loader2 className="animate-spin mr-1" size={16} />
+                            ) : (
+                                <WandSparkles className="mr-1" size={16} />
+                            )}
+                            Generate Video
+                        </Button>
                     </ScrollArea>
                 </div>
                 <div>

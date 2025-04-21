@@ -5,13 +5,13 @@ import RemotionComposition from '@/app/_components/RemotionComposition';
 
 function RemotionPlayer({videoData}) {
 
-    const [durationInFrames, setDurationInFrames] = useState(100);
+    // const [durationInFrames, setDurationInFrames] = useState(100);
 
     return (
         <div>
             <Player
                 component={RemotionComposition}
-                durationInFrames={Number(durationInFrames.toFixed(0)) + 100}
+                durationInFrames={videoData?.captionJson?Number((videoData?.captionJson[videoData?.captionJson?.length - 1]?.end * 30).toFixed(0)):200}
                 compositionWidth={720}
                 compositionHeight={1280}
                 fps={30}

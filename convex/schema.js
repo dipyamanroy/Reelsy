@@ -20,6 +20,7 @@ export default defineSchema({
         captionJson: v.optional(v.any()),
         uid: v.id('users'),
         createdBy: v.string(),
-        status: v.optional(v.string())
+        status: v.optional(v.string()),
+        downloadUrl: v.optional(v.string())
     })
 })

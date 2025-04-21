@@ -5,7 +5,7 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-const SCRIPT_PROMPT = `Write two different scripts for a short video (like TikTok) of duration 30 seconds on the topic: {topic}.
+const SCRIPT_PROMPT = `Write two different scripts for a short video (like TikTok) of duration 20 seconds on the topic: {topic}.
 1. Do not add scene description.
 2. Do not add anything in braces, just return the plain story in text.
 3. Give me the response in JSON format and follow the schema:

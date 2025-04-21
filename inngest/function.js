@@ -7,8 +7,9 @@ import Replicate from "replicate";
 import axios from "axios";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "@/convex/_generated/api";
+import { getServices, renderMediaOnCloudrun } from '@remotion/cloudrun/client';
 
-const ImagePromptScript = `Generate a detailed image prompt for each scene from this 30-second video script, using a {style} style. Output JSON only.
+const ImagePromptScript = `Generate a detailed image prompt for each scene from this 20-second video script, using a {style} style. Output JSON only.
 
 Rules:
 1. Do NOT include camera angles.
@@ -178,6 +179,62 @@ export const GenerateVideoData = inngest.createFunction(
                 return result;
             }
         )
-        return 'Executed successfully!';
+
+        // Render video
+        const RenderVideo = await step.run(
+            "renderVideo",
+            async () => {
+                const services = await getServices({
+                    region: 'us-east1',
+                    compatibleOnly: true,
+                });
+
+                const serveUrl = process.env.GCP_SERVE_URL;
+
+                const serviceName = services[0].serviceName;
+                const result = await renderMediaOnCloudrun({
+                    serviceName,
+                    region: 'us-east1',
+                    serveUrl,
+                    composition: 'reelsy',
+                    inputProps: {
+                        videoData: {
+                            audioUrl: GenerateAudioFile,
+                            captionJson: GenerateCaptions,
+                            images: GenerateImages
+                        }
+                    },
+                    codec: 'h264',
+                });
+                console.log({
+                    serviceName,
+                    serveUrl,
+                    audio: GenerateAudioFile,
+                    captions: GenerateCaptions,
+                    images: GenerateImages
+                });
+
+                console.log("Bucket:", result.bucketName);
+                console.log("Render ID:", result.renderId);
+
+                return result?.publicUrl;
+            }
+        );
+
+        // Update Download URL
+        const UpdateDownloadUrl = await step.run(
+            "updateDownloadUrl",
+            async () => {
+                const result = await convex.mutation(api.videoData.UpdateVideoRecord, {
+                    recordId: recordId,
+                    audioUrl: GenerateAudioFile,
+                    captionJson: GenerateCaptions,
+                    images: GenerateImages,
+                    downloadUrl: RenderVideo
+                });
+                return result;
+            }
+        )
+        return RenderVideo;
     }
 );

@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import ConvexClientProvider from "../ConvexClientProvider";
 import Provider from "./provider";
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata = {
   title: "Reelsy",
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
         <ConvexClientProvider>
           <Provider>
             {children}
+            <Toaster />
           </Provider>
         </ConvexClientProvider>
       </body>
