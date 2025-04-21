@@ -19,7 +19,7 @@ export const CreateNewUser = mutation({
                 name: args.name,
                 email: args.email,
                 photoURL: args.photoURL,
-                credits: 3
+                credits: 1
             }
             // User does not exist, create new
             await ctx.db.insert('users', userData)
