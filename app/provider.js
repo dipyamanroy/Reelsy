@@ -14,8 +14,6 @@ function Provider({ children }) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            console.log(user)
-
             if (user) {
                 queueMicrotask(async () => {
                     const result = await CreateUser({
@@ -23,7 +21,6 @@ function Provider({ children }) {
                         email: user.email,
                         photoURL: user.photoURL
                     });
-                    console.log(result);
                     setUser(result);
                 });
             }

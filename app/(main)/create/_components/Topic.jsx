@@ -54,7 +54,6 @@ function Topic({ onHandleInputChange }) {
             const result = await axios.post('/api/generate-script', {
                 topic: finalTopic
             });
-            console.log(result.data);
             setScripts(result.data?.scripts);
         } catch (error) {
             console.error("Error generating script:", error);

@@ -27,7 +27,6 @@ function Create() {
             ...prev,
             [fieldName]: fieldValue
         }))
-        console.log(formData)
     }
 
     const GenerateVideo = async () => {
@@ -60,14 +59,10 @@ function Create() {
                 credits: user?.credits
             });
 
-            console.log(resp);
-
             const result = await axios.post('/api/generate-video-data', {
                 ...formData,
                 recordId: resp
             });
-
-            console.log(result);
 
             router.push('/dashboard');
         } catch (error) {
