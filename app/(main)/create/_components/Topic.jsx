@@ -1,5 +1,6 @@
 "use client"
 
+import { useAuthContext } from '@/app/provider';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -26,6 +27,7 @@ function Topic({ onHandleInputChange }) {
     const [scripts, setScripts] = useState();
     const [selectedScriptIndex, setSelectedScriptIndex] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const { user } = useAuthContext();
 
     const handleTopicChange = (value) => {
         onHandleInputChange('topic', value);
@@ -35,6 +37,12 @@ function Topic({ onHandleInputChange }) {
     };
 
     const GenerateScript = async () => {
+        if(user?.credits <= 0)
+        {
+            toast('You are all out of credits!')
+            return;
+        }
+
         if (!finalTopic) {
             console.error("No topic provided");
             return;

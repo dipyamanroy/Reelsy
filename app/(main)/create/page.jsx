@@ -28,6 +28,13 @@ function Create() {
     }
 
     const GenerateVideo = async () => {
+
+        if(user?.credits <= 0)
+        {
+            toast('You are all out of credits!')
+            return;
+        }
+
         if(!formData?.topic || !formData?.script || !formData?.artStyle || !formData?.caption || !formData?.voice) 
         {
             console.log("ERROR", "Enter All Fields")
