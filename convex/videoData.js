@@ -10,7 +10,8 @@ export const CreateVideoData = mutation({
         caption: v.any(),
         voice: v.string(),
         uid: v.id('users'),
-        createdBy: v.string()
+        createdBy: v.string(),
+        credits: v.number()
     },
     handler: async (ctx, args) => {
         const result = await ctx.db.insert('videoData', {
@@ -21,8 +22,14 @@ export const CreateVideoData = mutation({
             caption: args.caption,
             voice: args.voice,
             uid: args.uid,
-            createdBy: args.createdBy
+            createdBy: args.createdBy,
+            status: 'pending'
         })
+
+        await ctx.db.patch(args.uid, {
+            credits: (args?.credits) - 1
+        })
+
         return result;
     }
 })
@@ -38,7 +45,8 @@ export const UpdateVideoRecord = mutation({
         const result = await ctx.db.patch(args.recordId, {
             audioUrl: args.audioUrl,
             captionJson: args.captionJson,
-            images: args.images
+            images: args.images,
+            status: 'completed'
         });
 
         return result

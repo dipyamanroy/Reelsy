@@ -5,6 +5,8 @@ import { OpenAI } from "openai";
 import { createClient } from "@deepgram/sdk";
 import Replicate from "replicate";
 import axios from "axios";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
 
 const ImagePromptScript = `Generate a detailed image prompt for each scene from this 30-second video script, using a {style} style. Output JSON only.
 
@@ -53,54 +55,56 @@ export const GenerateVideoData = inngest.createFunction(
             caption,
             artStyle,
             voice,
+            recordId
         } = event?.data;
+        const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL);
 
         // Generate audio file MP3
         const GenerateAudioFile = await step.run(
             "generateAudioFile",
             async () => {
-                // if (!script) {
-                //     throw new Error("Script text is required for TTS.");
-                // }
+                if (!script) {
+                    throw new Error("Script text is required for TTS.");
+                }
 
-                // const storagePath = `Reelsy-data/audio/tts-${Date.now()}.mp3`;
-                // const storageRef = ref(storage, storagePath);
+                const storagePath = `Reelsy-data/audio/tts-${Date.now()}.mp3`;
+                const storageRef = ref(storage, storagePath);
 
-                // const speechStream = await openai.audio.speech.create({
-                //     model: "gpt-4o-mini-tts",
-                //     voice: voice,
-                //     input: script,
-                //     response_format: "mp3",
-                // });
+                const speechStream = await openai.audio.speech.create({
+                    model: "gpt-4o-mini-tts",
+                    voice: voice,
+                    input: script,
+                    response_format: "mp3",
+                });
 
-                // const buffer = Buffer.from(await speechStream.arrayBuffer());
+                const buffer = Buffer.from(await speechStream.arrayBuffer());
 
-                // await uploadBytes(storageRef, buffer, {
-                //     contentType: "audio/mp3",
-                // });
+                await uploadBytes(storageRef, buffer, {
+                    contentType: "audio/mp3",
+                });
 
-                // const downloadUrl = await getDownloadURL(storageRef);
-                // return downloadUrl;
+                const downloadUrl = await getDownloadURL(storageRef);
+                return downloadUrl;
             }
         );
 
         // Generate Captions
-        // const GenerateCaptions = await step.run(
-        //     "generateCaptions",
-        //     async () => {
-        //         const deepgram = createClient(process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY);
+        const GenerateCaptions = await step.run(
+            "generateCaptions",
+            async () => {
+                const deepgram = createClient(process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY);
 
-        //         const { result, error } = await deepgram.listen.prerecorded.transcribeUrl(
-        //             {
-        //                 url: GenerateAudioFile,
-        //             },
-        //             {
-        //                 model: "nova-3",
-        //             }
-        //         );
-        //         return result.results?.channels[0]?.alternatives[0]?.words;
-        //     }
-        // )
+                const { result, error } = await deepgram.listen.prerecorded.transcribeUrl(
+                    {
+                        url: GenerateAudioFile,
+                    },
+                    {
+                        model: "nova-3",
+                    }
+                );
+                return result.results?.channels[0]?.alternatives[0]?.words;
+            }
+        )
 
         // Generate Image prompt
         const GenerateImagePrompts = await step.run(
@@ -128,7 +132,7 @@ export const GenerateVideoData = inngest.createFunction(
         const GenerateImages = await step.run(
             "generateImages",
             async () => {
-                const urls = await Promise.all(
+                const result = await Promise.all(
                     GenerateImagePrompts.map(async ({ imagePrompt }) => {
                         const [output] = await replicate.run(
                             "bytedance/sdxl-lightning-4step:6f7a773af6fc3e8de9d5a3c00be77c17308914bf67772726aff83496ba1e3bbe",
@@ -157,10 +161,23 @@ export const GenerateVideoData = inngest.createFunction(
                     })
                 );
 
-                return urls;
+                return result;
             }
         );
 
-        return GenerateImages;
+        // Save to db
+        const UpdateDB = await step.run(
+            "updateDb",
+            async () => {
+                const result = await convex.mutation(api.videoData.UpdateVideoRecord, {
+                    recordId: recordId,
+                    audioUrl: GenerateAudioFile,
+                    captionJson: GenerateCaptions,
+                    images: GenerateImages
+                });
+                return result;
+            }
+        )
+        return 'Executed successfully!';
     }
 );

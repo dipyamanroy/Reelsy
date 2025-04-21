@@ -44,7 +44,8 @@ function Create() {
             caption: formData.caption,
             voice: formData.voice,
             uid: user?._id,
-            createdBy: user?.email
+            createdBy: user?.email,
+            credits: user?.credits
         })
 
         console.log(resp);
