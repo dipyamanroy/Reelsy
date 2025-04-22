@@ -206,13 +206,6 @@ export const GenerateVideoData = inngest.createFunction(
                     },
                     codec: 'h264',
                 });
-                console.log({
-                    serviceName,
-                    serveUrl,
-                    audio: GenerateAudioFile,
-                    captions: GenerateCaptions,
-                    images: GenerateImages
-                });
 
                 console.log("Bucket:", result.bucketName);
                 console.log("Render ID:", result.renderId);
