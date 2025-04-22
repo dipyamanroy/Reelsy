@@ -1,22 +1,23 @@
+<div align="center">
+
 ![Reelsy header](reelsy_header.png)
 
-# Reelsy
 An AI-powered short video generator built with **Next.js** + **React**, using **Convex** for real-time database management and **Inngest** for asynchronous background jobs.
 
-
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-0EA5E9?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![shadcn/ui](https://img.shields.io/badge/shadcn/ui-1E293B?style=for-the-badge&logo=shadcn/ui&logoColor=white)
-![Convex](https://img.shields.io/badge/Convex-F3B01C?style=for-the-badge&logoColor=white)
-![Inngest](https://img.shields.io/badge/Inngest-18b880?style=for-the-badge&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-000000?style=for-the-badge&logo=openai&logoColor=white)
-![Replicate](https://img.shields.io/badge/Replicate-ea2805?style=for-the-badge&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white) 
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) 
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) 
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-0EA5E9?style=for-the-badge&logo=tailwindcss&logoColor=white) 
+![shadcn/ui](https://img.shields.io/badge/shadcn/ui-1E293B?style=for-the-badge&logo=shadcn/ui&logoColor=white) 
+![Convex](https://img.shields.io/badge/Convex-F3B01C?style=for-the-badge&logoColor=white) 
+![Inngest](https://img.shields.io/badge/Inngest-18b880?style=for-the-badge&logoColor=white) 
+![OpenAI](https://img.shields.io/badge/OpenAI-000000?style=for-the-badge&logo=openai&logoColor=white) 
+![Replicate](https://img.shields.io/badge/Replicate-ea2805?style=for-the-badge&logoColor=white) 
 ![Deepgram](https://img.shields.io/badge/Deepgram-289C9C?style=for-the-badge&logo=deepgram&logoColor=white)
 
+</div>
 
---- 
+---
 ## Contents
 
 - [Getting Started](#getting-started)
