@@ -134,12 +134,23 @@ Visit [http://localhost:3000](http://localhost:3000) to see your app in action.
 
 ---
 ## Environment Variables
+#### Firebase
+Reelsy persists speech audio and images in Firebase. You must create a Web App API key in Firebase. Follow the guide [here](https://firebase.google.com/docs/projects/api-keys).
+
+#### OpenAI
+Reelsy need OpenAI for script and tts generation. Ensure you have access to `gpt-4o-mini`/`gpt-4o` and `gpt-4o-mini-tts`.  You can find your OpenAI API key [here](https://platform.openai.com/api-keys).
+
+#### Deepgram
+Reelsy needs Deepgram to generate caption timestamps from speech audio. You must create a Web App API key in Firebase. Follow the guide [here](https://developers.deepgram.com/docs/create-additional-api-keys).
+
+#### Replicate
+Reelsy needs Replicate to generate images to be used in the video. Create an account and find your key [here](replicate.com/account/api-tokens).
 
 You will need to set the following in `.env.local`:
 
 ```env
 NEXT_PUBLIC_FIREBASE_API_KEY=...
-NEXT_PUBLIC_CONVEX_URL=...
+NEXT_PUBLIC_CONVEX_URL=...              # Auto generated (or localhost)
 OPENAI_API_KEY=...
 NEXT_PUBLIC_DEEPGRAM_API_KEY=...
 REPLICATE_API_TOKEN=...
@@ -147,6 +158,9 @@ REPLICATE_API_TOKEN=...
 
 You will need to set the following in `.env`:
 
+
+#### Remotion Cloudrun and GCP
+To perform [SSR](https://www.remotion.dev/docs/ssr) with Remotion Cloudrun and GCP, follow the guide [here](https://www.remotion.dev/docs/cloudrun/setup).
 ```env
 REMOTION_GCP_PRIVATE_KEY=...
 REMOTION_GCP_CLIENT_EMAIL=...
@@ -154,6 +168,9 @@ REMOTION_GCP_PROJECT_ID=...
 GCP_SERVICE_URL=...
 GCP_SERVE_URL=...
 ```
+
+> [!IMPORTANT]
+Follow the Remotion Cloudrun guide for the "Export and Download" functionality to be active.
 ---
 
 ## How to Contribute
