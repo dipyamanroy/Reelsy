@@ -1,5 +1,6 @@
 ![Reelsy header](reelsy_header.png)
 
+# Reelsy
 An AI-powered short video generator built with **Next.js** + **React**, using **Convex** for real-time database management and **Inngest** for asynchronous background jobs.
 
 
@@ -15,9 +16,20 @@ An AI-powered short video generator built with **Next.js** + **React**, using **
 ![Deepgram](https://img.shields.io/badge/Deepgram-289C9C?style=for-the-badge&logo=deepgram&logoColor=white)
 
 
+--- 
+## Contents
+
+- [Getting Started](#getting-started)
+- [Convex Setup (Local)](#convex-setup-local)
+- [Inngest Setup (Local)](#inngest-setup-local)
+- [Running the App](#running-the-app)
+- [Project Structure](#project-structure)
+- [Environment Variables](#environment-variables)
+- [How to Contribute](#how-to-contribute)
+- [License](#license)
 
 
-
+---
 ## Getting Started
 
 ### 1. Clone the Repository
@@ -215,3 +227,7 @@ Make sure to explain why the changes are needed and what impact they will have.
 The maintainers will review your pull request. Be open to feedback and make necessary changes.
 
 If changes are requested, modify your code and push the updates to your branch.
+
+
+## License
+This project is licensed under GPL v3. Find the full license here [LICENSE](LICENSE).
