@@ -35,7 +35,7 @@ An AI-powered short video generator built with **Next.js** + **React**, using **
 
 ## Architecture
 
-![Architecture](architecture.svg)
+![Architecture](architecture.png)
 
 
 ```elixir
