@@ -32,6 +32,23 @@ An AI-powered short video generator built with **Next.js** + **React**, using **
 
 
 ---
+
+## Architecture
+
+![Architecture](architecture.svg)
+
+
+```elixir
+├── app/                # Next.js App Router
+├── convex/             # Convex functions and schema
+├── inngest/            # Inngest functions and event handlers
+├── public/             # Assets (e.g., fonts, clips)
+├── .env                # Environment variables (for Remotion and GCP)
+└── .env.local          # Environment variables (for Firebase, Convex,OpenAI, Deepgram Replicate)
+```
+
+---
+
 ## Getting Started
 
 ### 1. Clone the Repository
@@ -120,19 +137,6 @@ npm run dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000) to see your app in action.
-
----
-
-## Project Structure
-
-```elixir
-├── app/                # Next.js App Router
-├── convex/             # Convex functions and schema
-├── inngest/            # Inngest functions and event handlers
-├── public/             # Assets (e.g., fonts, clips)
-├── .env                # Environment variables (for Remotion and GCP)
-└── .env.local          # Environment variables (for Firebase, Convex,OpenAI, Deepgram Replicate)
-```
 
 ---
 ## Environment Variables
