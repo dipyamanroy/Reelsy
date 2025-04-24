@@ -53,9 +53,9 @@ function VideoList() {
                 :
                 <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-10'>
                     {videoList?.map((video, index) => (
-                        <Link key={index} href={'/play-video/' + video?._id}>
-                            <div className='relative'>
-                                {video?.status == 'completed' ?
+                        video?.status === 'completed' ? (
+                            <Link key={index} href={'/play-video/' + video?._id}>
+                                <div className='relative'>
                                     <Image
                                         src={video?.images[0]}
                                         alt={video?.title}
@@ -63,20 +63,27 @@ function VideoList() {
                                         height={500}
                                         className='w-full object-cover rounded-xl aspect-[2/3]'
                                     />
-                                    :
-                                    <div className='aspect-[2/3] p-5 w-full rounded-xl bg-neutral-900 flex flex-col items-center justify-center gap-2'>
-                                        <RotateCw className='animate-spin text-neutral-400' />
-                                        <h2 className='text-sm text-neutral-400'>Generating...</h2>
-                                    </div>}
+                                    <div className="absolute bottom-0 w-full h-2/3 bg-gradient-to-t from-black via-transparent to-transparent rounded-b-xl"></div>
+                                    <div className='absolute bottom-3 px-5 w-full z-10'>
+                                        <h2 className="text-white font-semibold">{video?.title}</h2>
+                                        <h2 className='text-sm text-gray-300'>{moment(video?._creationTime).fromNow()}</h2>
+                                    </div>
+                                </div>
+                            </Link>
+                        ) : (
+                            <div key={index} className='relative'>
+                                <div className='aspect-[2/3] p-5 w-full rounded-xl bg-neutral-900 flex flex-col items-center justify-center gap-2'>
+                                    <RotateCw className='animate-spin text-neutral-400' />
+                                    <h2 className='text-sm text-neutral-400'>Generating...</h2>
+                                </div>
                                 <div className="absolute bottom-0 w-full h-2/3 bg-gradient-to-t from-black via-transparent to-transparent rounded-b-xl"></div>
                                 <div className='absolute bottom-3 px-5 w-full z-10'>
                                     <h2 className="text-white font-semibold">{video?.title}</h2>
                                     <h2 className='text-sm text-gray-300'>{moment(video?._creationTime).fromNow()}</h2>
                                 </div>
                             </div>
-                        </Link>
+                        )
                     ))}
-
                 </div>
             }
         </div>
