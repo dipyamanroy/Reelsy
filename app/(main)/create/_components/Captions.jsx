@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Checkbox } from "@/components/ui/checkbox"
 
 const options = [
     {
@@ -33,22 +34,54 @@ const options = [
         name: 'Futuristic',
         style: 'text-blue-500 text-3xl font-light uppercase tracking-wide drop-shadow-[0_0_15px_rgba(0, 204, 255, 0.8), 0_0_25px_rgba(0, 204, 255, 0.6)] px-3 py-1'
     },
+    {
+        name: 'None',
+        style: 'opacity-0'
+    },
 ]
-
-
 function Captions({ onHandleInputChange }) {
-    const [selectedCaptionStyle, setSelectedCaptionStyle] = useState();
+    const [selectedCaptionStyle, setSelectedCaptionStyle] = useState(null);
+    const [noCaption, setNoCaption] = useState(false);
+
+    const handleNoCaptionToggle = (checked) => {
+        setNoCaption(checked);
+
+        if (checked) {
+            setSelectedCaptionStyle('None');
+            const noneOption = options.find(opt => opt.name === 'None');
+            onHandleInputChange('caption', noneOption);
+        } else {
+            setSelectedCaptionStyle(null);
+            onHandleInputChange('caption', null);
+        }
+    }
 
     return (
         <div className='mt-6'>
-            <h2>Caption Styles</h2>
-            <p className='text-sm text-gray-400 mb-1'>Select caption style for your video</p>
+            <h2 className='text-lg font-semibold'>Caption Styles</h2>
+            <p className='text-sm text-gray-400 mb-2'>Select caption style for your video</p>
+
+            {/* No Captions toggle */}
+            <div className='flex items-center gap-2 mb-4'>
+                <Checkbox
+                    id="noCaptions"
+                    checked={noCaption}
+                    onCheckedChange={handleNoCaptionToggle}
+                />
+                <label htmlFor="noCaptions" className="text-md">No Captions</label>
+            </div>
+
+            {/* Caption styles */}
             <div className='flex flex-wrap gap-4 mt-2'>
-                {options.map((option, index) => (
-                    <div key={index} className={`p-2 dark:bg-gray-900 dark:border-white rounded-lg hover:border cursor-pointer ${selectedCaptionStyle == option.name && 'border'}`}
+                {options.filter(opt => opt.name !== 'None').map((option, index) => (
+                    <div
+                        key={index}
+                        className={`p-2 dark:bg-gray-900 dark:border-white rounded-lg hover:border cursor-pointer ${selectedCaptionStyle === option.name && 'border'} ${noCaption ? 'opacity-50 pointer-events-none' : ''}`}
                         onClick={() => {
-                            setSelectedCaptionStyle(option.name)
-                            onHandleInputChange('caption', option)
+                            if (noCaption) return;
+
+                            setSelectedCaptionStyle(option.name);
+                            onHandleInputChange('caption', option);
                         }}
                     >
                         <h2 className={option.style}>{option.name}</h2>
@@ -59,4 +92,4 @@ function Captions({ onHandleInputChange }) {
     )
 }
 
-export default Captions
+export default Captions;
