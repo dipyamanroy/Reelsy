@@ -1,20 +1,28 @@
+"use client"
+
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import Authentication from './Authentication'
 
 function Hero() {
     return (
-        <div className='p-10 flex flex-col items-center justify-center mt-32 md:px-20 lg:px-36 xl:px-48'>
-            <h2 className='font-bold text-5xl text-center'>Welcome to Reelsy</h2>
-            <p className='mt-4 text-2xl text-gray-400 text-center'>Blazing fast AI short form content generator that creates engaging content tailored for your business</p>
-            <div className='mt-7 flex gap-8'>
+        <section className="relative z-10 px-4 py-16 sm:py-24 flex flex-col items-center text-center gap-6 sm:gap-8 md:px-20 lg:px-36 xl:px-48">
+            <h1 className="mt-24 font-extrabold text-4xl sm:text-5xl md:text-6xl leading-tight">
+                Welcome to <span className="text-gradient bg-gradient-to-br from-green-400 to-blue-500 bg-clip-text text-transparent">Reelsy</span>
+            </h1>
+
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-500 max-w-3xl">
+                Blazing fast AI short-form content generator that crafts engaging, tailored video scripts and ideas for your business in seconds.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 mt-6">
                 <Authentication>
-                    <Button size="lg">Get Started</Button>
+                    <Button size="lg" className='bg-gradient-to-br from-green-400 to-blue-500 text-gray-900 hover:bg-gradient-to-b transition duration-300'>Get Started</Button>
                 </Authentication>
                 <Button size="lg" variant="secondary">Contact Us</Button>
             </div>
-        </div>
+        </section>
     )
 }
 
-export default Hero
+export default Hero;

@@ -51,7 +51,7 @@ function AppSidebar() {
             <SidebarHeader>
                 <div className="flex flex-col items-center w-full">
                     <div className="flex items-center gap-2 justify-center mt-3">
-                        <Image
+                        <Image 
                             src={"/logo.svg"}
                             alt="Reelsy logo"
                             width={40}
