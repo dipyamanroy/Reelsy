@@ -39,7 +39,7 @@ function Features() {
     ]
 
     return (
-        <section className="py-20 px-6 md:px-24 xl:px-60 bg-[#0c0c0c] text-gray-200">
+        <section id="features" className="py-20 px-6 md:px-24 xl:px-60 bg-[#0c0c0c] text-gray-200">
             <div className="text-center mb-12">
                 <Badge className="mb-3">What You Get</Badge>
                 <h2 className="text-3xl sm:text-4xl font-bold">Features Built for Speed & Scale</h2>

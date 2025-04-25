@@ -7,7 +7,7 @@ import React from 'react'
 
 function Pricing() {
     return (
-        <section className="py-16 text-center">
+        <section id="pricing" className="py-16 text-center">
             <Badge className="mb-3">Pricing</Badge>
             <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-gray-200">Choose Your Plan</h2>
 
