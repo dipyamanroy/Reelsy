@@ -25,10 +25,10 @@ function Footer() {
 
                 {/* Socials */}
                 <div className="flex gap-5 text-xl">
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <a href="https://github.com/dipyamanroy/reelsy" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                         <FaGithub className="hover:text-white transition" />
                     </a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <a href="https://twitter.com/reelsy" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                         <FaTwitter className="hover:text-white transition" />
                     </a>
                     <a href="mailto:hello@reelsy.ai" aria-label="Email">
