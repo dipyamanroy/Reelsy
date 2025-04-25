@@ -7,52 +7,62 @@ import { Clapperboard, RotateCw } from 'lucide-react';
 import moment from 'moment';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 function VideoList() {
     const [videoList, setVideoList] = useState([]);
+    const [loading, setLoading] = useState(true); // ⬅️ new loading state
     const convex = useConvex();
     const { user } = useAuthContext();
 
     useEffect(() => {
-        user && GetUserVideoList();
-    }, [user])
+        if (user) GetUserVideoList();
+    }, [user]);
 
     const GetUserVideoList = async () => {
-        // All user videos
+        setLoading(true); // ⬅️ set loading before fetching
         const result = await convex.query(api.videoData.GetUserVideos, {
             uid: user?._id
         });
         setVideoList(result);
-        const isPendingVideo = result?.find((item) => item.status == 'pending');
-        isPendingVideo && GetPendingVideoStatus(isPendingVideo);
-    }
+        setLoading(false); // ⬅️ set loading to false once done
+
+        const isPendingVideo = result?.find((item) => item.status === 'pending');
+        if (isPendingVideo) GetPendingVideoStatus(isPendingVideo);
+    };
 
     const GetPendingVideoStatus = (pendingVideo) => {
         const intervalId = setInterval(async () => {
-            // Get video data by Id
             const result = await convex.query(api.videoData.GetVideoById, {
                 videoId: pendingVideo?._id
-            })
+            });
 
-            if (result?.status == 'completed') {
+            if (result?.status === 'completed') {
                 clearInterval(intervalId);
                 GetUserVideoList();
             }
-        }, 5000)
+        }, 5000);
+    };
+
+    if (loading) {
+        return (
+            <div className="flex justify-center mt-60">
+                <RotateCw className="animate-spin text-neutral-400" size={32} />
+            </div>
+        );
     }
 
     return (
         <div>
-            {videoList?.length == 0 ?
+            {videoList.length === 0 ? (
                 <div className='flex flex-col items-center justify-center mt-28 gap-5 p-5 border border-dashed rounded-xl py-16 bg-neutral-900'>
                     <Image src={'/logo.svg'} style={{ filter: 'grayscale(100%)' }} alt='logo' width={50} height={50} />
                     <h2 className='text-gray-400 text-lg'>You don't have any videos. Click create to make your first!</h2>
                     <Link href={'/create'}><Button variant='secondary' className='mt-2'><Clapperboard />Create</Button></Link>
                 </div>
-                :
+            ) : (
                 <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-10'>
-                    {videoList?.map((video, index) => (
+                    {videoList.map((video, index) => (
                         video?.status === 'completed' ? (
                             <Link key={index} href={'/play-video/' + video?._id}>
                                 <div className='relative'>
@@ -85,9 +95,9 @@ function VideoList() {
                         )
                     ))}
                 </div>
-            }
+            )}
         </div>
-    )
+    );
 }
 
-export default VideoList
+export default VideoList;
