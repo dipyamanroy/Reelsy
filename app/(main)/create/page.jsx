@@ -81,8 +81,8 @@ function Create() {
             <h2 className='text-3xl'>Create</h2>
             <h2 className='text-md text-gray-400'>Start your creative journey here</h2>
             <div className='grid grid-cols-1 md:grid-cols-3 mt-8 gap-10'>
-                <div className='col-span-2 p-7 border rounded-xl h-[70vh]'>
-                    <ScrollArea className='h-[70vh] w-full'>
+            <ScrollArea className='col-span-2 h-[70vh] w-full'>
+                <div className=' p-7 border rounded-xl h-[70vh]'>
                         {/* Topic and Script */}
                         <Topic onHandleInputChange={onHandleInputChange} />
                         {/* Art style */}
@@ -104,8 +104,8 @@ function Create() {
                             )}
                             Generate Video
                         </Button>
-                    </ScrollArea>
-                </div>
+                    </div>
+                </ScrollArea>
                 <div>
                     <Preview formData={formData} />
                 </div>
