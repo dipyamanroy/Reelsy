@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 
 function VideoList() {
     const [videoList, setVideoList] = useState([]);
-    const [loading, setLoading] = useState(true); // ⬅️ new loading state
+    const [loading, setLoading] = useState(true);
     const convex = useConvex();
     const { user } = useAuthContext();
 
@@ -20,15 +20,21 @@ function VideoList() {
     }, [user]);
 
     const GetUserVideoList = async () => {
-        setLoading(true); // ⬅️ set loading before fetching
-        const result = await convex.query(api.videoData.GetUserVideos, {
-            uid: user?._id
-        });
-        setVideoList(result);
-        setLoading(false); // ⬅️ set loading to false once done
+        setLoading(true);
+        try {
+            const result = await convex.query(api.videoData.GetUserVideos, {
+                uid: user?._id
+            });
 
-        const isPendingVideo = result?.find((item) => item.status === 'pending');
-        if (isPendingVideo) GetPendingVideoStatus(isPendingVideo);
+            setVideoList(result || []);
+
+            const isPendingVideo = result?.find((item) => item.status === 'pending');
+            if (isPendingVideo) GetPendingVideoStatus(isPendingVideo);
+        } catch (error) {
+            console.error("Error fetching videos:", error);
+        } finally {
+            setLoading(false); // Always set loading to false regardless of result
+        }
     };
 
     const GetPendingVideoStatus = (pendingVideo) => {
