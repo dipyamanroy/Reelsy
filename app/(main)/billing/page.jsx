@@ -15,14 +15,14 @@ export default function BillingPage() {
     const handleCreditChange = (value) => {
         setCreditAmount(value[0])
     }
-
     return (
         <div>
+            <Badge className="mb-4" variant="destructive">Demo page (Not functional)</Badge>
+
             <div
                 className="absolute w-60 h-60 bg-gradient-to-br from-green-400 via-blue-400 to-blue-500 rounded-full blur-2xl opacity-40 z-[-20] pointer-events-none animate-pulse shadow-[0_0_80px_30px_rgba(34,197,94,0.3)]"
                 style={{ top: "-100px", right: "25px" }}
             />
-
             <h2 className="text-3xl">Billing</h2>
             <h2 className="text-md text-neutral-400 mb-8">Manage your subscription and credits</h2>
 
