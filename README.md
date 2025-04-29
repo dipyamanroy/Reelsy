@@ -1,7 +1,8 @@
 <div align="center">
 
 ![Reelsy header](reelsy_header.png)
-Reelsy v0.1.1
+
+Reelsy v0.1.2
 
 An AI-powered short video generator built with **Next.js** + **React**, using **Convex** for real-time database management and **Inngest** for asynchronous background jobs.
 
