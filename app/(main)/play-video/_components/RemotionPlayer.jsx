@@ -22,7 +22,6 @@ function RemotionPlayer({videoData}) {
                 }}
                 inputProps={{
                     videoData:videoData,
-                    setDurationInFrame: (frameValue) => setDurationInFrames(frameValue)
                 }}
             />
         </div>
