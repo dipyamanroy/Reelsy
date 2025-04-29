@@ -57,7 +57,7 @@ function Pricing() {
                 <Card className="max-w-xs mx-auto shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
                     <CardHeader className='flex flex-col justify-center items-center'>
                         <h3 className="text-2xl font-semibold text-gray-200 mb-4">Enterprise</h3>
-                        <Badge variant="outline" className="text-neutral-400">On Demand</Badge>
+                        <Badge variant="outline" className="text-neutral-400">Custom Pricing</Badge>
                     </CardHeader>
                     <CardContent className="text-gray-300">
                         <ul className="text-left mb-6">

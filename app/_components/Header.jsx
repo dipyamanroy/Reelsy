@@ -34,10 +34,12 @@ function Header() {
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <div className="flex items-center gap-3">
-                        <Image src="/logo.svg" alt="logo" width={40} height={40} />
-                        <h2 className="text-xl md:text-2xl font-bold">Reelsy</h2>
-                    </div>
+                    <Link href='/'>
+                        <div className="flex items-center gap-3">
+                            <Image src="/logo.svg" alt="logo" width={40} height={40} />
+                            <h2 className="text-xl md:text-2xl font-bold">Reelsy</h2>
+                        </div>
+                    </Link>
 
                     {/* Desktop Menu */}
                     <div className="hidden sm:flex items-center gap-10">

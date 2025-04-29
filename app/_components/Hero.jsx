@@ -3,12 +3,16 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import Authentication from './Authentication'
+import { useAuthContext } from '../provider';
+import Link from 'next/link';
 
 function Hero() {
+    const { user } = useAuthContext();
+
     return (
         <section className="relative z-10 px-4 py-16 sm:py-24 flex flex-col items-center text-center gap-6 sm:gap-8 md:px-20 lg:px-36 xl:px-48">
             <h1 className="mt-24 font-regular text-4xl sm:text-5xl md:text-6xl leading-tight">
-                Welcome to <span className="font-bold text-gradient bg-gradient-to-br from-green-400 to-blue-500 bg-clip-text text-transparent">Reelsy</span>
+                Welcome to <span className="font-bold text-gradient bg-gradient-to-br from-green-600 to-blue-500 bg-clip-text text-transparent">Reelsy</span>
             </h1>
 
             <p className="text-lg sm:text-xl md:text-2xl text-gray-500 max-w-3xl">
@@ -16,10 +20,20 @@ function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
-                <Authentication>
-                    <Button size="lg" className='bg-gradient-to-br from-green-400 to-blue-500 text-gray-900 hover:bg-gradient-to-b transition duration-300'>Get Started</Button>
-                </Authentication>
-                <Button size="lg" variant="secondary">Contact Us</Button>
+            {!user ? (
+                            <Authentication>
+                                <Button>Get Started</Button>
+                            </Authentication>
+                        ) : (
+                            <>
+                                <Link href="/dashboard">
+                                    <Button variant="default" size="lg">Go to Dashboard</Button>
+                                </Link>
+                            </>
+                        )}
+                <Link href="mailto:someemailaddress@5b.com">
+                    <Button size="lg" variant="secondary">Contact Us</Button>
+                </Link>
             </div>
         </section>
     )
