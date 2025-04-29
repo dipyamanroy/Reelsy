@@ -4,8 +4,14 @@ import { Card, CardHeader, CardBody, CardFooter, CardContent } from "@/component
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import React from 'react'
+import { useAuthContext } from "../provider"
+import Authentication from "./Authentication"
+import Link from "next/link"
+import { Loader2 } from "lucide-react"
 
 function Pricing() {
+    const { user, loading } = useAuthContext();
+
     return (
         <section id="pricing" className="py-16 text-center">
             <Badge className="mb-3">Pricing</Badge>
@@ -27,9 +33,19 @@ function Pricing() {
                         </ul>
                     </CardContent>
                     <CardFooter>
-                        <Button className="bg-gradient-to-br from-green-400 to-blue-500 text-gray-900 w-full hover:bg-gradient-to-b transition duration-300">
-                            Get Started
-                        </Button>
+                        {loading ? (
+                            <Button disabled variant="outline" className="w-full"><Loader2 className="animate-spin"/></Button>
+                        ) : !user ? (
+                            <Authentication>
+                                <Button className="bg-gradient-to-br from-green-400 to-blue-500 text-gray-900 w-full hover:bg-gradient-to-b transition duration-300">
+                                    Get Started
+                                </Button>
+                            </Authentication>
+                        ) : (
+                            <Button asChild variant="outline" className="w-full">
+                                <Link href="/dashboard">Subscribed</Link>
+                            </Button>
+                        )}
                     </CardFooter>
                 </Card>
 

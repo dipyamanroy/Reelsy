@@ -5,10 +5,10 @@ import React, { useState, useEffect } from 'react'
 import Authentication from './Authentication'
 import { useAuthContext } from '../provider'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Loader2, Menu, X } from 'lucide-react'
 
 function Header() {
-    const { user } = useAuthContext();
+    const { user, loading } = useAuthContext();
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -47,7 +47,10 @@ function Header() {
                         <Link href="#pricing" className="text-white hover:text-green-400">Pricing</Link>
                         <Link href="#contact" className="text-white hover:text-green-400">Contact</Link>
 
-                        {!user ? (
+                        {loading ? (
+                            <Loader2 className="animate-spin text-neutral-700 m-2" />
+
+                        ) : !user ? (
                             <Authentication>
                                 <Button>Get Started</Button>
                             </Authentication>
@@ -65,6 +68,7 @@ function Header() {
                                 />
                             </>
                         )}
+
                     </div>
 
                     {/* Hamburger Icon */}
@@ -85,7 +89,9 @@ function Header() {
                         <Link href="#about" className="text-gray-700 hover:text-green-500">About</Link>
                         <Link href="#contact" className="text-gray-700 hover:text-green-500">Contact</Link>
 
-                        {!user ? (
+                        {loading ? (
+                            <Loader2 className="animate-spin text-neutral-700 m-2" />
+                        ) : !user ? (
                             <Authentication>
                                 <Button className="w-full">Get Started</Button>
                             </Authentication>
@@ -106,6 +112,7 @@ function Header() {
                                 </div>
                             </>
                         )}
+
                     </div>
                 )}
             </div>

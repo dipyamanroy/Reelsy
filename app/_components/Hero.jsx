@@ -5,9 +5,10 @@ import React from 'react'
 import Authentication from './Authentication'
 import { useAuthContext } from '../provider';
 import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
 
 function Hero() {
-    const { user } = useAuthContext();
+    const { user, loading } = useAuthContext();
 
     return (
         <section className="relative z-10 px-4 py-16 sm:py-24 flex flex-col items-center text-center gap-6 sm:gap-8 md:px-20 lg:px-36 xl:px-48">
@@ -20,17 +21,19 @@ function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
-            {!user ? (
-                            <Authentication>
-                                <Button>Get Started</Button>
-                            </Authentication>
-                        ) : (
-                            <>
-                                <Link href="/dashboard">
-                                    <Button variant="default" size="lg">Go to Dashboard</Button>
-                                </Link>
-                            </>
-                        )}
+                {loading ? (
+                    <Loader2 className="animate-spin text-neutral-700 m-2" />
+                ) : !user ? (
+                    <Authentication>
+                        <Button>Get Started</Button>
+                    </Authentication>
+                ) : (
+                    <>
+                        <Button asChild size="lg">
+                            <Link href="/dashboard">Go to dashboard</Link>
+                        </Button>
+                    </>
+                )}
                 <Link href="mailto:someemailaddress@5b.com">
                     <Button size="lg" variant="secondary">Contact Us</Button>
                 </Link>
