@@ -12,7 +12,6 @@ function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
-    // Add scroll event listener to detect when the page is scrolled
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 10) {
