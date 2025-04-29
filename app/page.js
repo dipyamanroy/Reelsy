@@ -6,6 +6,7 @@ import Pricing from "./_components/Pricing";
 import Features from "./_components/Features";
 import Footer from "./_components/Footer";
 import Techs from "./_components/Techs";
+import HowItWorks from "./_components/HowItWorks";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <Demo />
         <Techs />
         <Features />
+        <HowItWorks />
         <Pricing />
         <Footer />
       </div>
