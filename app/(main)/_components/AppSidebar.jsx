@@ -50,16 +50,18 @@ function AppSidebar() {
         <Sidebar collapsible="icon">
             <SidebarHeader>
                 <div className="flex flex-col items-center w-full">
-                    <div className="flex items-center gap-2 justify-center mt-3">
-                        <Image 
-                            src={"/logo.svg"}
-                            alt="Reelsy logo"
-                            width={40}
-                            height={40}
-                            className="group-data-[collapsible=icon]:w-[48px] group-data-[collapsible=icon]:h-[48px]"
-                        />
-                        <h2 className="font-bold text-2xl group-data-[collapsible=icon]:hidden">Reelsy</h2>
-                    </div>
+                    <Link href="/">
+                        <div className="flex items-center gap-2 justify-center mt-3">
+                            <Image
+                                src={"/logo.svg"}
+                                alt="Reelsy logo"
+                                width={40}
+                                height={40}
+                                className="group-data-[collapsible=icon]:w-[48px] group-data-[collapsible=icon]:h-[48px]"
+                            />
+                            <h2 className="font-bold text-2xl group-data-[collapsible=icon]:hidden">Reelsy</h2>
+                        </div>
+                    </Link>
                     <h2 className="text-sm text-gray-400 text-center mt-3 group-data-[collapsible=icon]:hidden">
                         AI short form content generator
                     </h2>
