@@ -179,6 +179,9 @@ GCP_SERVE_URL=...
 
 > [!IMPORTANT]
 Follow the Remotion Cloudrun guide for the "Export and Download" functionality to be active.
+
+> [!WARNING]
+Ensure you allocate more than base-tier resources to your GCP Cloud Run instance to ensure SSR succeeds.
 ---
 
 ## How to Contribute
