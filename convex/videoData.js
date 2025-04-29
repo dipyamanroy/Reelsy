@@ -37,7 +37,7 @@ export const CreateVideoData = mutation({
 export const UpdateVideoRecord = mutation({
     args:{
         recordId: v.id('videoData'),
-        audioUrl: v.string(),
+        audioUrl: v.optional(v.string()),
         images: v.any(),
         captionJson: v.any(),
         downloadUrl: v.optional(v.string())
