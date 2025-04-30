@@ -15,20 +15,23 @@ function AppHeader() {
             {user?.photoURL ? (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <div className="p-0.5 rounded-full hover:ring-2 hover:ring-neutral-700 transition duration-200">
-                            <Image
-                                src={user?.photoURL}
-                                alt="User"
-                                width={36}
-                                height={36}
-                                className="rounded-full object-cover cursor-pointer"
-                            />
-                        </div>
+                        <Image
+                            src={user?.photoURL}
+                            alt="User"
+                            width={36}
+                            height={36}
+                            className="rounded-full object-cover cursor-pointer"
+                        />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="mt-2">
-                        <DropdownMenuItem onClick={handleSignOut} className="gap-2">
-                            <LogOut className="w-4 h-4" />
-                            Sign Out
+                    <DropdownMenuContent align="end" className="w-56">
+                        <div className="px-3 py-2">
+                            <p className="font-medium leading-none">{user?.name || "User"}</p>
+                            <p className="mt-1 truncate text-xs text-muted-foreground">{user?.email}</p>
+                        </div>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                            <LogOut className="mr-2 h-4 w-4" />
+                            <span>Sign Out</span>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
