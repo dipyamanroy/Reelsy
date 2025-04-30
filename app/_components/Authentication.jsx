@@ -53,7 +53,7 @@ export default function Authentication({ children }) {
         }
     }
 
-    const handleEmailSignIn = async () => {
+    const handleEmailSignIn = async (e) => {
         e.preventDefault()
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password)
@@ -65,7 +65,7 @@ export default function Authentication({ children }) {
         }
     }
 
-    const handleEmailSignUp = async () => {
+    const handleEmailSignUp = async (e) => {
         e.preventDefault()
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password)
