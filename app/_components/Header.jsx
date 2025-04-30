@@ -123,28 +123,16 @@ function Header() {
                                 <Link href="/dashboard">
                                     <Button className="w-full">Dashboard</Button>
                                 </Link>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Image
-                                            src={user?.photoURL}
-                                            alt="User"
-                                            width={36}
-                                            height={36}
-                                            className="rounded-full object-cover cursor-pointer"
-                                        />
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end" className="w-56">
-                                        <div className="px-3 py-2">
-                                            <p className="font-medium leading-none">{user?.name || "User"}</p>
-                                            <p className="mt-1 truncate text-xs text-muted-foreground">{user?.email}</p>
-                                        </div>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
-                                            <LogOut className="mr-2 h-4 w-4" />
-                                            <span>Sign Out</span>
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
+                                <div className="flex items-center gap-3 mt-2">
+                                    <Image
+                                        src={user?.photoURL}
+                                        alt="User"
+                                        width={36}
+                                        height={36}
+                                        className="rounded-full object-cover"
+                                    />
+                                    <span className="text-sm text-gray-700">Welcome back!</span>
+                                </div>
                             </>
                         )}
 
