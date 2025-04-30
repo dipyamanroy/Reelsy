@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
-import Authentication from './Authentication'
 import { useAuthContext } from '../provider'
 import Link from 'next/link'
 import { Loader2, LogOut, Menu, X } from 'lucide-react'
@@ -14,6 +13,7 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { handleSignOut } from '../utils/authHelper'
+import AuthModal from './AuthModal'
 
 function Header() {
     const { user, loading } = useAuthContext();
@@ -58,9 +58,9 @@ function Header() {
                             <Loader2 className="animate-spin text-neutral-700 m-2" />
 
                         ) : !user ? (
-                            <Authentication>
-                                <Button>Get Started</Button>
-                            </Authentication>
+                            <AuthModal>
+                                <Button className="bg-gradient-to-br from-green-400 to-blue-500 text-gray-900 hover:bg-gradient-to-b transition duration-300">Get Started</Button>
+                            </AuthModal>
                         ) : (
                             <>
                                 <Link href="/dashboard">

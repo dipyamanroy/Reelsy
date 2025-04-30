@@ -6,6 +6,7 @@ import Authentication from './Authentication'
 import { useAuthContext } from '../provider';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
+import AuthModal from './AuthModal';
 
 function Hero() {
     const { user, loading } = useAuthContext();
@@ -24,9 +25,9 @@ function Hero() {
                 {loading ? (
                     <Loader2 className="animate-spin text-neutral-700 m-2" />
                 ) : !user ? (
-                    <Authentication>
-                        <Button size="lg">Get Started</Button>
-                    </Authentication>
+                    <AuthModal>
+                        <Button size="lg" className="bg-gradient-to-br from-green-400 to-blue-500 text-gray-900 hover:bg-gradient-to-b transition duration-300">Get Started</Button>
+                    </AuthModal>
                 ) : (
                     <>
                         <Button asChild size="lg">

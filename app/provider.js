@@ -13,21 +13,30 @@ function Provider({ children }) {
     const CreateUser = useMutation(api.users.CreateNewUser);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                queueMicrotask(async () => {
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                const fallbackName = firebaseUser.email?.split("@")[0] || "User";
+                const name = firebaseUser.displayName ?? fallbackName;
+                const photoURL =
+                    firebaseUser.photoURL ??
+                    `https://api.dicebear.com/6.x/initials/svg?seed=${encodeURIComponent(name)}`;
+
+                try {
                     const result = await CreateUser({
-                        name: user.displayName,
-                        email: user.email,
-                        photoURL: user.photoURL
+                        name,
+                        email: firebaseUser.email,
+                        photoURL,
                     });
                     setUser(result);
-                    setLoading(false);
-                });
+                } catch (err) {
+                    console.error("Failed to create user in Convex:", err);
+                    setUser(null);
+                }
             } else {
                 setUser(null);
-                setLoading(false);
             }
+
+            setLoading(false);
         });
 
         return () => unsubscribe();
