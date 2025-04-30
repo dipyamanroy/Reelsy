@@ -49,9 +49,9 @@ function Header() {
 
                     {/* Desktop Menu */}
                     <div className="hidden sm:flex items-center gap-10">
-                        <Link href="#features" className="text-white hover:text-green-400">Features</Link>
-                        <Link href="#pricing" className="text-white hover:text-green-400">Pricing</Link>
-                        <Link href="#contact" className="text-white hover:text-green-400">Contact</Link>
+                        <Link href="#features" className="text-white hover:text-neutral-300">Features</Link>
+                        <Link href="#pricing" className="text-white hover:text-neutral-300">Pricing</Link>
+                        <Link href="#contact" className="text-white hover:text-neutral-300">Contact</Link>
 
                         {loading ? (
                             <Loader2 className="animate-spin text-neutral-700 m-2" />
