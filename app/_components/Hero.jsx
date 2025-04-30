@@ -25,7 +25,7 @@ function Hero() {
                     <Loader2 className="animate-spin text-neutral-700 m-2" />
                 ) : !user ? (
                     <Authentication>
-                        <Button>Get Started</Button>
+                        <Button size="lg">Get Started</Button>
                     </Authentication>
                 ) : (
                     <>

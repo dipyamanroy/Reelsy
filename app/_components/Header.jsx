@@ -5,7 +5,14 @@ import React, { useState, useEffect } from 'react'
 import Authentication from './Authentication'
 import { useAuthContext } from '../provider'
 import Link from 'next/link'
-import { Loader2, Menu, X } from 'lucide-react'
+import { Loader2, LogOut, Menu, X } from 'lucide-react'
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+} from "@/components/ui/dropdown-menu"
+import { handleSignOut } from '../utils/authHelper'
 
 function Header() {
     const { user, loading } = useAuthContext();
@@ -58,13 +65,25 @@ function Header() {
                                 <Link href="/dashboard">
                                     <Button variant="default">Dashboard</Button>
                                 </Link>
-                                <Image
-                                    src={user?.photoURL}
-                                    alt="User"
-                                    width={36}
-                                    height={36}
-                                    className="rounded-full object-cover"
-                                />
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <div className="p-0.5 rounded-full hover:ring-2 hover:ring-neutral-700 transition duration-200">
+                                            <Image
+                                                src={user?.photoURL}
+                                                alt="User"
+                                                width={36}
+                                                height={36}
+                                                className="rounded-full object-cover cursor-pointer"
+                                            />
+                                        </div>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end" className="mt-2">
+                                        <DropdownMenuItem onClick={handleSignOut} className="gap-2">
+                                            <LogOut className="w-4 h-4" />
+                                            Sign Out
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </>
                         )}
 
