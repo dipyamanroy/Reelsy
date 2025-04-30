@@ -21,8 +21,8 @@ export default function Home() {
         <Hero />
         <Demo />
         <Techs />
-        <Features />
         <HowItWorks />
+        <Features />
         <Pricing />
         <Footer />
       </div>
