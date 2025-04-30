@@ -1,7 +1,7 @@
 "use client"
 import { useAuthContext } from '@/app/provider'
 import { handleSignOut } from '@/app/utils/authHelper'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { LogOut } from 'lucide-react'
 import Image from 'next/image'
