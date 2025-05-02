@@ -62,7 +62,7 @@ function PlayVideo() {
         <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mr-30 ml-30'>
             <div
             className="absolute w-60 h-60 bg-gradient-to-br from-green-400 via-blue-400 to-blue-500 rounded-full blur-2xl opacity-40 z-[-25] pointer-events-none animate-pulse shadow-[0_0_80px_30px_rgba(34,197,94,0.3)]"
-            style={{ top: '-100px', right: '25px' }}
+            style={{ top: '-100px', right: '20%' }}
             />
             <div>
                 {!isReady ? (

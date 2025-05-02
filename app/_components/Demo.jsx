@@ -7,7 +7,7 @@ function Demo() {
     return (
         <section className="relative z-10 px-4 py-16 md:px-20 lg:px-36 xl:px-48 flex justify-center items-center">
             {/* Glowing Effect */}
-            <div className="absolute w-4xl mb-30 h-full bg-gradient-to-br from-green-400 to-blue-500 opacity-30 blur-3xl rounded-xl z-0" />
+            <div className="absolute w-full mb-30 h-full bg-gradient-to-br from-green-400 to-blue-500 opacity-30 blur-3xl rounded-xl z-0" />
 
             {/* Demo Image */}
             <div className="relative w-full rounded-xl overflow-hidden shadow-2xl z-10">
