@@ -36,8 +36,9 @@ function Header() {
     }, []);
 
     return (
-        <header className={`fixed top-0 left-0 w-full py-4 z-50 transition-all duration-300 ${scrolled ? 'bg-neutral-950/80 backdrop-blur-sm shadow-sm' : 'bg-transparent'
-            }`}>
+        <header className={`fixed top-0 left-0 w-full py-4 z-50 transition-all duration-300 ${
+            scrolled || menuOpen ? 'bg-neutral-950/80 backdrop-blur-sm shadow-sm' : 'bg-transparent'
+        }`}>
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
@@ -106,18 +107,18 @@ function Header() {
 
                 {/* Mobile Dropdown Menu */}
                 {menuOpen && (
-                    <div className="sm:hidden mt-4 flex flex-col gap-4 bg-white p-4 rounded-lg shadow-md">
-                        <Link href="#home" className="text-gray-700 hover:text-green-500">Home</Link>
-                        <Link href="#features" className="text-gray-700 hover:text-green-500">Features</Link>
-                        <Link href="#about" className="text-gray-700 hover:text-green-500">About</Link>
-                        <Link href="#contact" className="text-gray-700 hover:text-green-500">Contact</Link>
+                    <div className="sm:hidden mt-4 flex flex-col gap-4 bg-neutral/90 p-4 rounded-lg shadow-md">
+                        <Link href="#home" className="text-white hover:text-neutral-500">Home</Link>
+                        <Link href="#features" className="text-white hover:text-neutral-500">Features</Link>
+                        <Link href="#about" className="text-white hover:text-neutral-500">About</Link>
+                        <Link href="#contact" className="text-white hover:text-neutral-500">Contact</Link>
 
                         {loading ? (
                             <Loader2 className="animate-spin text-neutral-700 m-2" />
                         ) : !user ? (
-                            <Authentication>
-                                <Button className="w-full">Get Started</Button>
-                            </Authentication>
+                            <AuthModal>
+                                <Button className="w-full bg-gradient-to-br from-green-400 to-blue-500 text-gray-900 hover:bg-gradient-to-b transition duration-300">Get Started</Button>
+                            </AuthModal>
                         ) : (
                             <>
                                 <Link href="/dashboard">
