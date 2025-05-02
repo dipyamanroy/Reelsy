@@ -142,7 +142,6 @@ function AuthModal({ children }) {
                         >
                             Back to Sign In
                         </Button>
-                        {error && <p className="text-red-500 text-sm">{error}</p>}
                     </div>
                 ) : (
                     <Tabs value={tabValue} onValueChange={setTabValue} className="w-full">
@@ -209,8 +208,6 @@ function AuthModal({ children }) {
                                 >
                                     Forgot Password
                                 </Button>
-
-                                {error && <p className="text-red-500 text-sm">{error}</p>}
                             </div>
                         </TabsContent>
 
@@ -276,8 +273,6 @@ function AuthModal({ children }) {
                                         </div>
                                     )}
                                 </Button>
-
-                                {error && <p className="text-red-500 text-sm">{error}</p>}
                             </div>
                         </TabsContent>
                     </Tabs>
